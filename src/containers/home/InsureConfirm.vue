@@ -1,0 +1,156 @@
+<template>
+	<div class="insure">
+  		<form class="mui-input-group">
+  			<div class="title">
+				投保计划信息
+			</div>
+			<div class="mui-input-row">
+		        <label>投保计划：</label>
+		    	<input type="text" placeholder="请输入紧急联系人电子邮箱" v-model="plan">
+		    </div>
+		    
+			<div class="title">
+				被保障人信息
+			</div>
+		    <div class="mui-input-row">
+		     <a href="javascript:void(0);" class="mui-navigate-right">  
+		     	<label>证件地区</label>
+		        <input type="text" id='showCityPicker' class="mui-push-right" placeholder="证件地区" v-model="insureInfo.user_region">
+			</a> 	
+		    </div>
+		   <div class="mui-input-row">
+		        <label>证件姓名</label>
+		    	<input type="text" placeholder="请输入姓名" v-model="insureInfo.user_name">
+		    </div>
+		     <div class="mui-input-row">
+		        <label>证件号码</label>
+		    	<input type="text" placeholder="请输入证件号码" v-model="insureInfo.user_idnum">
+		    </div>
+		     
+		    <div class="title">
+				紧急联系人信息
+			</div>
+			 <div class="mui-input-row">
+		        <a href="javascript:void(0);" class="mui-navigate-right"> 
+	        	  	<label>联系人国籍</label>
+	        		<input type="text" id='showCityPicker1' placeholder="联系人国籍" v-model="insureInfo.linker_region">
+		   		</a>
+			 </div>
+		     <div class="mui-input-row">
+		        <label>联系人姓名</label>
+		    	<input type="text" placeholder="请输入紧急联系人姓名" v-model="insureInfo.linker_name">
+		    </div>
+		    <div class="mui-input-row">
+		        <label>联系电话</label> 
+				<select v-model="insureInfo.area_num" style="width: 30px;background: #C0CCDA; position: absolute;" class="mui-navigate-right">
+					<option  v-for="am in area_nums" :value="am">+{{am}}</option>
+				</select>
+		    	<input style="margin-left: 35px; position: absolute;"
+		    		 type="text" placeholder="请输入紧急联系人电话" v-model="insureInfo.linker_phone">
+		    </div>
+		    <div class="mui-input-row">
+		        <label>电子邮箱</label>
+		    	<input type="text" placeholder="请输入紧急联系人电子邮箱" v-model="insureInfo.linker_email">
+		    </div>
+		    
+		    <div class="title">
+				支付信息
+			</div>
+			<div class="mui-input-row">
+		        <label>支付总计：</label>
+		    	<input type="text" placeholder="请输入紧急联系人电子邮箱" v-model="insureInfo.user_amount">
+		    </div>
+		</form>
+	    <button style="margin-top: 30px;" @click="placeOrder(insureInfo)" class="mui-btn mui-btn-warning mui-btn-block">提交订单</button>
+
+	</div>
+</template>
+
+<script> 
+	import { mapState } from "vuex"
+	import Url from '../../utils/url.js';
+	import cityData3 from "@/assets/mui/js/city.data-3.js" 
+	
+	export default{
+		computed: {
+			...mapState({
+				insureInfo:state => state.insure.insureInfo2.insure,
+				plan:state => state.insure.insureInfo2.insurance,
+			})
+		},
+		data(){
+			return{
+				verifiybtn: true,
+				area_nums:['86','88','10'],
+  				read:false,
+  				
+			}
+		},
+		created(){
+			this.confirm();
+//			this.$store.dispatch("getTitle","")
+//			var param = {
+//				insurance_id: this.$route.params.money,
+//				user_amount: this.$route.params.money
+//			}
+		},
+		methods:{
+		 	 
+		 	//查看投保信息
+		 	confirm(){
+		 		let _self = this;
+		 		let _data = this.$route.query;
+		 		$.ajax({
+		            url: Url+'/Api/Interface/getInsureInfo',
+		            type:'post',
+		            data:_data,
+		            success:function ({code, msg, data}) {
+		            	if(code==1){
+//		            		state.insureInfo = data;
+    				     	_self.$store.dispatch("sendInsureConfirm",data)
+		            	}else{
+		            		console.log("msg")
+
+		            	}
+		            },
+		            error:function () {
+		            }
+        		});
+		 	},
+			placeOrder(param){
+				let _self = this;
+				let _data = {
+					uid: localStorage.userid,
+					insurance_id: param.insurance_id,
+					user_age: param.user_age,
+					insure_id: param.id,
+					order_many: param.user_amount,
+				}
+				$.ajax({
+		            url: Url+'/Api/Interface/confirmInsure',
+		            type:'post',
+		            data:_data,
+		            success:function ({code, msg, data}) {
+		            	if(code==1){
+							_self.$router.push({path:'/payorder',name:'NRC钱包支付',query:_data})
+    				     	_self.$store.dispatch("confirmInsure",data)
+		            	}else{
+		            		console.log("msg") 
+
+		            	}
+		            },
+		            error:function () {
+		            }
+        		});
+			}
+	
+		},
+		mounted(){
+
+//		
+		}
+		
+	}
+ 
+		</script>
+ 
