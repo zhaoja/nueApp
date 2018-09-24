@@ -1,6 +1,5 @@
 <template>
-	<div class="mui-content mine">
-		<img src="@/assets/images/shequ.png" class="imgbg" alt="" />
+	<div class="mine img-bg1">
 		<div class="myinner">
 			<div class="setup">
 				<a href="#/accountInfo"><span class="mui-icon mui-icon-gear-filled"></span></a>
@@ -8,7 +7,7 @@
 			<div class="inner1">
 				<img src="@/assets/images/my.png" alt="" />
 				<a href="#/plogin" class="mui-btn mui-btn-white mui-btn-outlined" v-if="!ifLogin">登录/注册</a>				
-				<div class="mui-btn mui-btn-white mui-btn-outlined" v-if="ifLogin">21313232</div>				
+				<div v-if="ifLogin">{{phone}}</div>				
 			</div>     
 			<div class="mui-card" style="margin-bottom: 35px;">
 				<ul class="mui-table-view">
@@ -55,15 +54,38 @@
 </template>
 
 <script>
+	import Url from '../utils/url.js';
+
 	export default{
 		data(){
 			return{
-				ifLogin:""
+				ifLogin:"",
+				phone:''
 			}
+		},
+		created(){
+			this.getPhone();
 		},
 		methods:{
 		 	account(){
 		 		this.$router.push({path:'/accountInfo',name:'账号信息',params:{}})
+		 	},
+		 	getPhone(){
+		 		let _self = this;
+ 		 		$.ajax({
+		            url: Url+'/Api/Interface/getLoginPhone',
+		            type:'post',
+		            data:{uid:localStorage.userid},
+		            success:function ({code, msg, data}) {
+		            	if(code==1){
+		            		_self.phone = data.phone;  			  
+		            	}else{
+		            		console.log("msg")
+		            	}
+		            },
+		            error:function () {
+		            }
+        		});
 		 	}
 		},
 		mounted(){

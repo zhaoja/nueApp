@@ -1,7 +1,6 @@
 <template>
-	<div class="publicity-datails">
+	<div class="publicity-datails img-bg1">
 		<div class="tips">INU提示：公示结束后会隐藏个人信息，保护受助者隐私</div>
-		<!--<img src="@/assets/images/shequ.png" class="imgbg" alt="" />-->
  		<ul class="mui-table-view smooth">
 			<li class="mui-table-view-cell person">
 				<img :src="accountInfo.personInfo.picture"/>
@@ -16,8 +15,8 @@
 		</ul>
 		<ul class="badge-li-list">
 			<li class="mui-table-view-cell"  v-for="txt in accountInfo.accountInfoTxt">
-				<div><h4>{{txt.name}}</h4></div>
-				<div>{{txt.value}}</div>
+				<div><h4 class="vertical-h4">{{txt.name}}</h4></div>
+				<div class="vertical-text">{{txt.value}}</div>
 			</li>
 		</ul>
 	</div>

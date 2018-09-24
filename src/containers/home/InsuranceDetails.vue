@@ -1,5 +1,5 @@
 <template>
-	<div class="insuranceDetails">
+	<div class="insurance-details">
 		<div class="inD1">
 			<img class="bannerImg" :src="InsuranceDetails.insurance_logo"/>
 		    <div class="mui-row">

@@ -1,6 +1,5 @@
 <template>
-	<div class="statistics">
-		<img src="@/assets/images/shequ.png" class="imgbg"/>
+	<div class="statistics img-bg1">
 		<div class="vbchain">
 			<div class="title">
 				<p>9,991,124</p>

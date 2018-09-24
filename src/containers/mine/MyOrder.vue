@@ -7,7 +7,7 @@
 			</li>
 		</ul>
 	 
-		<div style="margin-top:60px" v-if="hasOrder">
+		<div style="margin-top:100px" v-if="hasOrder">
  			<ul class="smooth">
 				<li class="smooth-li" v-for="ol in myOrderList">
 					<div class="inner">

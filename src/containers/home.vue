@@ -40,7 +40,7 @@
 			<div class="mui-card">
 				
 				<div class="mui-card-content">
-					<h4>保障计划</h4>
+					<h4 class="vertical-h4">保障计划</h4>
 					<ul class="mui-table-view">
 						<li class="mui-table-view-cell mui-media" v-for="ins in insureData.insurance" :key="ins.id">
 							<img class="mui-pull-left" :src="ins.insurance_logo">

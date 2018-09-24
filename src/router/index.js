@@ -81,7 +81,11 @@ export default new Router({
 			},{
 				path: 'mine',
 				name: '我的',
-				component: Mine
+				component: Mine,
+				beforeEnter: (to, from, next) => {
+			        localStorage.uid!="";
+			        next()
+			    },
 			}]
 		},
 		{

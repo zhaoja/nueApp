@@ -1,7 +1,5 @@
 <template>
-	<div class="publicity">
-		<img src="@/assets/images/shequ.png" class="imgbg" alt="" />
- 
+	<div class="publicity img-bg1"> 
 		<!--下拉刷新容器-->
 		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll community-num">
@@ -48,7 +46,7 @@
 	      		{id:3,'img':img1,'time':'2018-01-01','help_member':'欧阳晓雨','help_plan':'欧阳晓雨','help_money':'27000','event':'补充细胞水分、促进水液代谢、稀释血液、预防便秘等，同时保证上午人体水分充足冲…'},
 	      		 ],
 	      		 publicityList2:[
-	      		{id:1,'img':img1,'time':'2018-01-01','help_member':'欧阳晓雨1','help_plan':'欧阳晓雨','help_money':'27000','event':'补充细胞水分、促进水液代谢、稀释血液、预防便秘等，同时保证上午人体水分充足冲…'},
+	      		{id:11,'img':img1,'time':'2018-01-01','help_member':'欧阳晓雨1','help_plan':'欧阳晓雨','help_money':'27000','event':'补充细胞水分、促进水液代谢、稀释血液、预防便秘等，同时保证上午人体水分充足冲…'},
 	      		{id:12,'img':img1,'time':'2018-01-01','help_member':'欧阳晓雨2','help_plan':'欧阳晓雨','help_money':'27000','event':'补充细胞水分、促进水液代谢、稀释血液、预防便秘等，同时保证上午人体水分充足冲…'},
 	      		{id:13,'img':img1,'time':'2018-01-01','help_member':'欧阳晓雨3','help_plan':'欧阳晓雨','help_money':'27000','event':'补充细胞水分、促进水液代谢、稀释血液、预防便秘等，同时保证上午人体水分充足冲…'},
 	      		{id:14,'img':img1,'time':'2018-01-01','help_member':'欧阳晓雨4','help_plan':'欧阳晓雨','help_money':'27000','event':'补充细胞水分、促进水液代谢、稀释血液、预防便秘等，同时保证上午人体水分充足冲…'},
@@ -56,7 +54,7 @@
 	      		{id:17,'img':img1,'time':'2018-01-01','help_member':'欧阳晓雨6','help_plan':'欧阳晓雨','help_money':'27000','event':'补充细胞水分、促进水液代谢、稀释血液、预防便秘等，同时保证上午人体水分充足冲…'},
 	      		{id:19,'img':img1,'time':'2018-01-01','help_member':'欧阳晓雨7','help_plan':'欧阳晓雨','help_money':'27000','event':'补充细胞水分、促进水液代谢、稀释血液、预防便秘等，同时保证上午人体水分充足冲…'},
 	      		{id:16,'img':img1,'time':'2018-01-01','help_member':'欧阳晓雨8','help_plan':'欧阳晓雨','help_money':'27000','event':'补充细胞水分、促进水液代谢、稀释血液、预防便秘等，同时保证上午人体水分充足冲…'},
-	      		{id:11,'img':img1,'time':'2018-01-01','help_member':'欧阳晓雨9','help_plan':'欧阳晓雨','help_money':'27000','event':'补充细胞水分、促进水液代谢、稀释血液、预防便秘等，同时保证上午人体水分充足冲…'},
+	      		{id:111,'img':img1,'time':'2018-01-01','help_member':'欧阳晓雨9','help_plan':'欧阳晓雨','help_money':'27000','event':'补充细胞水分、促进水液代谢、稀释血液、预防便秘等，同时保证上午人体水分充足冲…'},
 	      		{id:41,'img':img1,'time':'2018-01-01','help_member':'欧阳晓雨10','help_plan':'欧阳晓雨','help_money':'27000','event':'补充细胞水分、促进水液代谢、稀释血液、预防便秘等，同时保证上午人体水分充足冲…'},
 	      		{id:51,'img':img1,'time':'2018-01-01','help_member':'欧阳晓雨11','help_plan':'欧阳晓雨','help_money':'27000','event':'补充细胞水分、促进水液代谢、稀释血液、预防便秘等，同时保证上午人体水分充足冲…'},
 	      		{id:61,'img':img1,'time':'2018-01-01','help_member':'欧阳晓雨12','help_plan':'欧阳晓雨','help_money':'27000','event':'补充细胞水分、促进水液代谢、稀释血液、预防便秘等，同时保证上午人体水分充足冲…'},
@@ -80,23 +78,9 @@
 			
 			pullupRefresh() {
 				let that = this;
-				setTimeout(function() {
-					var table = document.body.querySelector('.mui-table-view');
-					var cells = document.body.querySelectorAll('.mui-table-view-cell');
-					for (var i = cells.length, len = that.publicityList2.length; i < len; i++) {
-						var li = document.createElement('li');
-						li.className = 'mui-table-view-cell';
-						li.innerHTML = '<img src="'+that.publicityList2[i].img+'">'
-								
-									+'<div class="mui-media-body">'
-									+'	<div>互助会员：'+that.publicityList2[i].help_member+'</div>'
-									+'	<div>互助计划：'+that.publicityList2[i].help_plan+'</div>'
-									+'	<div>所获互助金：'+that.publicityList2[i].help_money+'</div>'
-									+'</div>'
-									+'<p>事件概况:'+that.publicityList2[i].event+'</p>';
-									    
-						table.appendChild(li);
-					}
+				
+				setTimeout(function() { // 模拟ajax
+					that.publicityList1 = that.publicityList1.concat(that.publicityList2);
 					mui('#pullrefresh').pullRefresh().endPullupToRefresh((++this.count > 2)); //参数为true代表没有更多数据了。
 
 				}, 1500);
@@ -107,7 +91,6 @@
 			}
 	   	},
 	   	mounted(){
-			
 	   		this.mui.init({
 				pullRefresh: {
 					container: '#pullrefresh',

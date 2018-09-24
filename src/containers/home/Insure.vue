@@ -8,7 +8,6 @@
 		     <a href="javascript:void(0);" class="mui-navigate-right">  
 		     	<label>证件地区</label>
 		        <input type="text" id='showCityPicker' class="mui-push-right" placeholder="证件地区" v-model="insureInfo.user_region">
-				<!--<div id='cityResult'></div>-->
 			</a> 	
 		    </div>
 		   <div class="mui-input-row">
@@ -35,17 +34,16 @@
 		    </div>
 		    <div class="mui-input-row">
 		        <label>联系电话</label> 
-				<select v-model="insureInfo.area_num" style="width: 30px;background: #C0CCDA; position: absolute;" class="mui-navigate-right">
-					<option  v-for="am in area_nums" :value="am">+{{am}}</option>
+				<select v-model="insureInfo.area_num" style="width:60px; position: absolute;" >
+					<option  v-for="am in area_nums" :value="am.value">+{{am.value}}</option>
 				</select>
-		    	<input style="margin-left: 35px; position: absolute;"
-		    		 type="text" placeholder="请输入紧急联系人电话" v-model="insureInfo.linker_phone">
+		    	<input style="margin-left: 65px; position: absolute;"
+		    		 type="number" placeholder="请输入紧急联系人电话" v-model="insureInfo.linker_phone">
 		    </div>
 		    <div class="mui-input-row">
 		        <label>电子邮箱</label>
-		    	<input type="text" placeholder="请输入紧急联系人电子邮箱" v-model="insureInfo.linker_email">
+		    	<input type="email" placeholder="请输入紧急联系人电子邮箱" v-model="insureInfo.linker_email">
 		    </div>
-		    
 		    <div>
 		    	<div class="title sure">
 		    		<input name="checkbox1" value="Item1" type="checkbox" checked v-model="read" @change="ifRead()">已阅读并同意
@@ -53,6 +51,8 @@
 				</div>
 		    </div>
 		</form>
+	    <div class="alert">  {{Message}}  </div>
+
 	    <button @click="joinInsure(insureInfo)" :disabled="verifiybtn"  class="mui-btn mui-btn-warning mui-btn-block">立即加入</button>
 
 	</div>
@@ -62,6 +62,7 @@
 	import { mapState } from "vuex"
 	import Url from '../../utils/url.js';
 	import cityData3 from "@/assets/mui/js/city.data-3.js" 
+	import countryData from "@/assets/mui/js/city.data.js" 
 	
 	export default{
 		computed: {
@@ -72,20 +73,46 @@
 		data(){
 			return{
 				verifiybtn: true,
-				area_nums:['86','88','10'],
+				area_nums:countryData,
   				read:false,
-  				
+  				Message:''
 			}
 		},
 		created(){
 //			this.$store.dispatch("getTitle","")
 		},
 		methods:{
+//			idCard(idNo){
+//				var regIdNo = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/; 
+//				if(!regIdNo.test(idNo)){ 
+//				  alert('身份证号填写有误'); 
+//				  return false; 
+//				}
+//			},
+			
 		 	ifRead(){
 				if(this.read==true){
-					this.verifiybtn = false;
+					//已阅读
+					var inputs = this.insureInfo.user_region!=""&&
+					this.insureInfo.user_name!=""&&
+					this.insureInfo.user_idnum!=""&&
+					this.insureInfo.linker_region!=""&&
+					this.insureInfo.linker_name!=""&&
+					this.insureInfo.area_num!=""&&
+					this.insureInfo.linker_phone!=""&&
+					this.insureInfo.linker_email!="";
+//						console.log(this.insureInfo)
+
+					if(inputs){
+						this.verifiybtn = false;
+					}else{
+						this.Message = "* 请填写完整"
+					}
+					
 				}else{
+					//未阅读
 					this.verifiybtn = true;
+					this.Message = ""
 				}
 		 	},
 		 	joinInsure(param){
@@ -149,16 +176,29 @@
 				}, false);
 				
 				//联系人国籍
+				var countryPicker = new this.mui.PopPicker({
+					layer: 1
+				});
+				countryPicker.setData(countryData);
+				
 				var showCityPickerButton1 = document.getElementById('showCityPicker1');
 				var cityResult1 = document.getElementById('cityResult1');
 				showCityPickerButton1.addEventListener('tap', function(event) {
-					cityPicker.show(function(items) {
-						_self.insureInfo.linker_region =_getParam(items[0], 'text') + " " + _getParam(items[1], 'text') + " " + _getParam(items[2], 'text');
+					countryPicker.show(function(items) {
+				 
+						_self.insureInfo.linker_region =_getParam(items[0], 'text') 
 //						//返回 false 可以阻止选择框的关闭
 							return false;
 					});
 				}, false);	
 // 			})();
+			
+			//输入的时候让已阅读为false
+//			$('input').bind('keyup', function () {		
+//				console.log(this.read)
+//				
+//				this.read = false;
+//			});
 		}
 	}
  

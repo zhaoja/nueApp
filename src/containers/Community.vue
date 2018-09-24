@@ -1,6 +1,5 @@
 <template>
-	<div class="community">
-		<img src="@/assets/images/shequ.png" class="imgbg"/>
+	<div class="community img-bg1">
 		<div class="community-num">
 			<div class="welcoming">
 				欢迎加入我们的社区~

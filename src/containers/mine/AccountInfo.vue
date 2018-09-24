@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="accountInfo">
 		<ul class="mui-table-view">
 			<li class="mui-table-view-cell">
 				<a class="mui-navigate-right">

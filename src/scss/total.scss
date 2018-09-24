@@ -12,7 +12,7 @@ $btn:13px;
 //$btgrey:1px solid $colF5;
 $btgrey:1px solid #efeaea;
 
-//
+//全局
 body {
     margin: 0;
     padding: 0;
@@ -26,7 +26,18 @@ body {
         line-height: 1.2 !important;
         border-radius:20px ;
     }
-
+//  a[disabled], html input[disabled] {
+//      cursor: default !important;
+//  }
+//  a:disabled {
+//      opacity: .6;
+//      background: #E5E5E5 !important;
+//      border: 1px solid #E5E5E5 !important;
+//      color: #000;
+//      font-size: 15px !important;
+//      font-weight: 600;
+//      letter-spacing: 5px;
+//  }
     .mui-btn:disabled{
         opacity: .6;
         background: #E5E5E5 !important;
@@ -35,11 +46,7 @@ body {
         font-size: 15px !important;
         font-weight: 600;
         letter-spacing: 5px;
-    }
-//  .mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
-//      border-top: 0!important;
-//      border-bottom: 0!important;
-//  }
+    } 
     .mui-table-view:before ,
     .mui-table-view:after,
     .mui-table-view-cell:after,
@@ -60,34 +67,54 @@ body {
         border-radius: 10px;
         margin: 15px 15px;
     }
-
+    .vertical-h4 {
+        font-size: 18px;
+        border-left: 5px solid #62AFFF;
+        height: 24px;
+        line-height: 24px;
+        padding-left: 10px;
+        border-radius: 4px;
+        margin: 15px;
+    }   
+    .img-bg1{
+        background: url(/static/img/shequ.4cd1437.png);
+        background-size: 100% 30% !important;
+        margin-top: 40px;
+        background-repeat: no-repeat;
+        overflow: scroll;
+        height: 500px;
+    }
+    .alert{
+        font-size: 13px;
+        padding-left: 15px;
+        margin-top: 10px;
+        color: #d97373;
+    }
 }
-.mt15{margin-top: 15px;}
-//.mt40{margin-top: 40px;}
-.mui-content{
-   background:transparent !important;
+//头部
+.header{
+    touch-action: none;
 }
-
-.mui-content-padded {
-    margin: 10px 0 !important;
+//底部
+.footer {
+    .mui-bar{
+       -webkit-box-shadow: 0 0 1px #E0E0E0;
+        box-shadow: 0 0 1px #EEEEEE; 
+    }
+    .mui-bar-tab .mui-tab-item {
+        color: #CADCFF;
+    }    
+    .mui-bar-tab .muiActive {
+        color: #007aff;
+    }
+    touch-action: none;
 }
-
+//登录注册
 .login,.register{
     height: 100vh;
     background: #fff !important;
     padding:60px 20px 0 !important;
-    a[disabled], html input[disabled] {
-        cursor: default !important;
-    }
-    a:disabled {
-        opacity: .6;
-        background: #E5E5E5 !important;
-        border: 1px solid #E5E5E5 !important;
-        color: #000;
-        font-size: 15px !important;
-        font-weight: 600;
-        letter-spacing: 5px;
-    }
+   
     .toplink{
         float: right;
         color: $colA9;
@@ -120,7 +147,6 @@ body {
     form{
         padding: 15px 0px;;
         input{
-           
             height: 40px;
             border: 0;
             border-bottom: 1px solid #E5E5E5;
@@ -134,13 +160,16 @@ body {
             color: $colA9;
         }
     }
-    .alert{
-        font-size: 13px;
-        padding-left: 15px;
-        margin-top: 10px;
-        color: #d97373;
-    }
+
 }
+//内部全部
+.home,.insurance-details,.insure,.accountInfo{
+    margin: 47px 0;
+}
+.mine, {
+    margin: 40px 0;
+}
+//首页
 .home {
     .home-slider {
         background: $white;
@@ -169,14 +198,13 @@ body {
                 background-size: 100% 100% !important;
                 color: #E8E8FF;
                 font-size: 13px;
-                margin: 0 15px;
                 span {
                     font-size: 18px;
                     margin-left: 20px;
                 }
                 a {
                     color: #908be3;
-                    background: rgba(255, 255, 255, 0.81);
+                    background: rgba(255, 255, 255, 0.80);
                     padding: 0 15px;
                     border-radius: 15px;
                     float: right;
@@ -197,15 +225,6 @@ body {
             box-shadow: 0 1px 2px rgba(244, 235, 235, 0.3) !important;
             .mui-card-content {
                 margin-left: 0px !important;
-                h4 {
-                    font-size: 18px;
-                    border-left: 5px solid #62AFFF;
-                    height: 24px;
-                    line-height: 24px;
-                    padding-left: 10px;
-                    border-radius: 4px;
-                    margin: 15px;
-                }
                 ul{
                     background: transparent !important;
                     margin-bottom: 10px;
@@ -239,27 +258,12 @@ body {
                     }
                 }
             }
-             
-        }
-        
-       
+        }  
     }
 }
-.header{
-    touch-action: none;
-}
-.footer {
-    .mui-bar{
-       -webkit-box-shadow: 0 0 1px #E0E0E0;
-        box-shadow: 0 0 1px #EEEEEE; 
-    }
-    .mui-bar-tab .mui-tab-item {
-        color: #CADCFF;
-    }    
-    touch-action: none;
-}
-//重大疾病保障计划
-.insuranceDetails {
+
+//保障计划
+.insurance-details {
     .title1 {
         height: 32px;
         line-height: 32px;
@@ -486,9 +490,14 @@ body {
     }  
  }
 .publicity{
+    #pullrefresh{
+        margin-top: 15%;
+    }
+    .mui-content{
+       background:transparent !important;
+    } 
     .community-num{
         position: absolute;
-        top: 15%;
         width: 100%;
         z-index: 0;
         .welcoming{
@@ -560,12 +569,17 @@ body {
 
         .inner1{
             text-align: center;
+            margin-bottom: 20px;
             img{
                 margin: auto;
                 display: inherit;
-                width: 25%;
+                width: 22%;
                 border-radius: 100px;
+                margin-bottom: 20px;
             } 
+            div{
+                color: $white;
+            }
             a{
               margin:20px auto;
               border-radius:15px ;
@@ -610,8 +624,9 @@ body {
     font-size: 16px;
 }
 .myOd,.myvc{
+    margin-top: 70px;
     .no{
-        margin-top: 50px;
+        margin-top: 20px;
         background: #fff;
         height: 100%;
         position: absolute;
@@ -729,21 +744,11 @@ body {
             background: #FFFFFF;
             box-shadow: 0 4px 20px 0 rgba(145,182,255,0.06);
             border-radius: 10px;
-            margin: 15px 15px; 
-            div{
-                padding:15px;
-               h4 {
-                    font-size: 18px;
-                    border-left: 5px solid #62AFFF;
-                    height: 24px;
-                    line-height: 24px;
-                    padding-left: 10px;
-                    border-radius: 4px;
-                } 
-            }
-            div:nth-child(2){
+            margin: 15px; 
+            .vertical-text{
+                padding: 15px;
                 border-top:$btgrey;
-//              color: #4D7FC0;
+                color: #4D7FC0 !important;
                 line-height: 23px;
             } 
         }
