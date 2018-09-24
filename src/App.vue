@@ -30,7 +30,7 @@ html,body{
 }
 #app {
 	position: relative;
-	margin: 40px 0;
+	margin: 0px 0;
 	min-height: 100%;
   	font-family: 'Avenir', Helvetica, Arial, sans-serif;
   	-webkit-font-smoothing: antialiased;

@@ -78,12 +78,7 @@
 			}
 		},
 		created(){
-			
 //			this.$store.dispatch("getTitle","")
-//			var param = {
-//				insurance_id: this.$route.params.money,
-//				user_amount: this.$route.params.money
-//			}
 		},
 		methods:{
 		 	ifRead(){
@@ -114,7 +109,6 @@
 		            			insure_id:data.insure_id,
 		            			insurance_id:data.insurance_id
 		            		}
-//		            		state.insureInfo = data;
 //  				     	this.$store.dispatch("sendInsureInfo",param)
 							_self.InsureConfirm(_data);
 		            	}else{
@@ -127,15 +121,11 @@
 		 	},
 		 	//查看投保信息
 		 	InsureConfirm(data){
-		 		 
-//		 		this.$router.pash({path:"/confirm"})
 		 		this.$router.push({path:'/confirm',name:'保单确认', query:data})
 		 	}
 
-	
 		},
 		mounted(){
-
 //			(function() {
 				this.mui.init();
 				let _self = this;
@@ -170,8 +160,7 @@
 				}, false);	
 // 			})();
 		}
-		
 	}
  
-		</script>
+</script>
  

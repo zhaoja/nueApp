@@ -12,7 +12,10 @@ export default {
 			password:"", //密码
 			repassword:"", //确认密码
 			uid: localStorage.userid,  //用户id
- 
+			user_name:"",
+			id_number:"",
+			idPhoto1:"",
+ 			idPhoto2:""
 		}
 	},
 	actions: {
