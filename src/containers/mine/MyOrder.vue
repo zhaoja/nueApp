@@ -1,9 +1,9 @@
-<template>
+		<template>
 	<div class="myOd">
 		 
 		<ul class="tabs clearfix box">
 			<li v-for="(tab,index) in tabsName">
-				<a href="javascript:void(0);" class="tab-link" @click="getMyOrderList(index)" v-bind:class="{active:tab.isActive}">{{tab.name}}</a>
+				<a href="javascript:void(0);" class="tab-link" @click="getMyOrderList(index)" v-bind:class="{active: (index === active)}">{{tab.name}}</a>
 			</li>
 		</ul>
 	 
@@ -60,29 +60,25 @@
 		data(){
 			return{
 				hasOrder:true,
+				active:0,
 				tabsName: [{
 					name: "全部",
-					isActive: true
+					tid:0,
 				},{
 					name: "未支付",
 					tid:1,
-					isActive: false
 				}, {
 					name: "已支付",
 					tid:2,
-					isActive: false
 				}, {
 					name: "审核中",
 					tid:3,
-					isActive: false
 				}, {
 					name: "已完成",
 					tid:4,
-					isActive: false
 				}, {
 					name: "已失效",
 					tid:5,
-					isActive: false
 				}],
 				status :{
 					0:"全部",
@@ -99,17 +95,17 @@
  		created(){
 			
 //			this.$store.dispatch("getTitle","")
- 			this.getMyOrderList()
+ 			this.getMyOrderList(0)
 		},
 		methods:{
 	 		getMyOrderList(param){
-	 			console.log(param,123)
+	 			this.active = param;
 		 		let _self = this;
 				let _data = {
 					uid: localStorage.userid,
 					status:param
 				}
-
+				
 				$.ajax({
 		            url: Url+'/Api/Interface/getOrderList',
 		            type:'post',
