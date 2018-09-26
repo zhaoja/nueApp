@@ -59,7 +59,7 @@ const store = new Vuex.Store({
 		order:insurance,
 	}
 })
-
+ 
 Vue.filter('replace', function (input) {
 	 return input.slice(5,10)
 })

@@ -72,26 +72,30 @@
 		 	},
 		 	getPhone(){
 		 		let _self = this;
- 		 		$.ajax({
+   		 		$.ajax({
 		            url: Url+'/Api/Interface/getLoginPhone',
 		            type:'post',
 		            data:{uid:localStorage.userid},
 		            success:function ({code, msg, data}) {
 		            	if(code==1){
-		            		_self.phone = data.phone;  			  
+		            		_self.phone = data.phone;  
+							console.log("msg1",localStorage.userid)
 		            	}else{
-		            		console.log("msg")
+		            		localStorage.userid = ""
+		            		console.log("msg",localStorage.userid)
 		            	}
 		            },
 		            error:function () {
+		            	console.log("erro")
 		            }
         		});
 		 	}
 		},
 		mounted(){
+//			localStorage.userid = ""
 			this.ifLogin = localStorage.userid;
 		 	this.mui.init()
-		 	console.log(localStorage.userid)
+//		 	console.log(localStorage.userid,"uid")
 		}
 	}
 </script>

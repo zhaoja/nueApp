@@ -77,12 +77,12 @@ body {
         margin: 15px;
     }   
     .img-bg1{
-        background: url(/static/img/shequ.4cd1437.png);
+        background:url(../assets/images/shequ.png);
         background-size: 100% 30% !important;
         margin-top: 40px;
         background-repeat: no-repeat;
         overflow: scroll;
-        height: 500px;
+        height: 100vh;
     }
     .alert{
         font-size: 13px;
@@ -163,7 +163,7 @@ body {
 
 }
 //内部全部
-.home,.insurance-details,.insure,.accountInfo{
+.home,.insurance-details,.insure,.accountInfo,.certification{
     margin: 47px 0;
 }
 .mine, {
@@ -390,6 +390,7 @@ body {
    }
 }
 .community{
+    margin-bottom: 50px;
     .community-num{
         position: absolute;
         top: 15%;
@@ -405,9 +406,7 @@ body {
         }
         ul{
             width: 90%;
-            
         }
-        
         li{             
             .copy{
                 font-size: 13px;

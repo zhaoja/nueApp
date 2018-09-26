@@ -28,7 +28,7 @@
 							</ul>
 							<div class="btnlist">
 								<button>取消订单</button>
-						 		<button>立即支付</button>
+						 		<button @click="toPay(ol)">立即支付</button>
 							</div>
 						</div>
 					</div>
@@ -125,7 +125,18 @@
 		            }
         		});
 		 	},
- 
+ 			toPay(param){
+ 				console.log(param)
+ 				let _data = {
+					uid: localStorage.userid,
+					insurance_id: param.insurance_id,
+					user_age: param.user_age,
+					insure_id: param.id,
+					order_many: param.user_amount,
+					order_num: param.order_num
+				}
+				this.$router.push({path:'/payorder',name:'NRC钱包支付',query:param})
+ 			}
 	
 		},
 		mounted(){

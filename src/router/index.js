@@ -34,8 +34,7 @@ import Layout from '@/components/layout'
 //import Tim from '@/components/Timeline'
 
 Vue.use(Router)
-
-export default new Router({
+const router = new Router({
 	routes: [
 		{
 			path: '/plogin',
@@ -82,10 +81,6 @@ export default new Router({
 				path: 'mine',
 				name: '我的',
 				component: Mine,
-				beforeEnter: (to, from, next) => {
-			        localStorage.uid!="";
-			        next()
-			    },
 			}]
 		},
 		{
@@ -102,17 +97,26 @@ export default new Router({
 //			path: '/insure/:id/:money',
 			path: '/insure',
 			name: '投保',
-			component: Insure
+			component: Insure,
+			meta: { 
+			  	requireAuth: true
+			}
 		},
 		{
 			path: '/confirm',
 			name: '保单确认',
-			component: InsureConfirm
+			component: InsureConfirm,
+			meta: { 
+			  	requireAuth: true
+			}
 		},
 		{
 			path: '/payorder',
 			name: 'NRC钱包支付',
-			component: PayOrder
+			component: PayOrder,
+			meta: { 
+			  	requireAuth: true
+			}
 		},
 		{
 			path: '/details',
@@ -128,12 +132,18 @@ export default new Router({
 		{
 			path: '/myvoucher',
 			name: '我的凭证',
-			component: MyVoucher
+			component: MyVoucher,
+			meta: { 
+			  	requireAuth: true
+			}
 		},
 		{
 			path: '/myorder',
 			name: '我的订单',
-			component: MyOrder
+			component: MyOrder,
+			meta: { 
+			  	requireAuth: true
+			}
 		},
 		{
 			path: '/invitefriends',
@@ -143,12 +153,18 @@ export default new Router({
 		{
 			path: '/indemnity',
 			name: '赔付申请',
-			component: MyIndemnity
+			component: MyIndemnity,
+			meta: { 
+			  	requireAuth: true
+			}
 		},
 		{
 			path: '/certification',
 			name: '实名认证',
-			component: Certification
+			component: Certification,
+			meta: { 
+			  	requireAuth: true
+			}
 		},
 		{
 			path: '/aboutus',
@@ -156,4 +172,25 @@ export default new Router({
 //			component: AboutUs
 		}
 	]
+
 })
+
+// 判断是否需要登录权限 以及是否登录
+router.beforeEach((to, from, next) => {
+ 	if (to.matched.some(res => res.meta.requireAuth)) {// 判断是否需要登录权限
+ 		console.log(localStorage.userid,1111)
+	 	if (localStorage.userid) {// 判断是否登录
+	  		next()
+	 	} else {// 没登录则跳转到登录界面
+	 		alert("请登录")
+		  	next({
+		  		path: '/mine',
+		  		query: {redirect: to.fullPath}
+		  	})
+	 	}
+ 	} else {
+ 		next()
+ 	}
+})
+ 
+export default router;
