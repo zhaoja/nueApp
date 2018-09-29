@@ -41,7 +41,8 @@
 <script>
 	import { mapState } from "vuex";
 	import validate  from '../../utils/myvalidate.js';
-	const url = "http://minsadmin.gksharedmall.com";
+ 	import Url from '../../utils/url.js';
+
 	export default {
 		data() {
 			return {
@@ -125,7 +126,7 @@
 				var that = this;
 				var time = 60
 				$.ajax({
-		            url: url+'/Api/Interface/getCode',
+		            url: Url+'/Api/Interface/getCode',
 		            type:'post',
 		            data:{"phone":this.userInfo.phone},
 		            success:function ({code, msg, data}) {
@@ -159,7 +160,7 @@
 					'uid':localStorage.userid
 				}
  				$.ajax({
-		            url: url+'/Api/Interface/updatePwd',
+		            url: Url+'/Api/Interface/updatePwd',
 		            type:'post',
 		            data:data,
 		            success:function ({code, msg, data}) {

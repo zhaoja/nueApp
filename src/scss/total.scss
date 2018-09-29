@@ -20,6 +20,7 @@ body {
     color: #333333;
     font-size: 14px !important;
 //  touch-action: none;
+    .pull-right{float: right;}
     .mui-btn, button, input[type=button], input[type=reset], input[type=submit] {
         font-size: 13px !important;
         font-weight: 400;
@@ -90,6 +91,12 @@ body {
         margin-top: 10px;
         color: #d97373;
     }
+    .hide{display: none;}
+//  .layer{
+//      .inner-layer{}
+//      .close{}
+//      .show{}
+//  }
 }
 //头部
 .header{
@@ -163,7 +170,7 @@ body {
 
 }
 //内部全部
-.home,.insurance-details,.insure,.accountInfo,.certification{
+.home,.insurance-details,.insure,.accountInfo,.certification,.myInd{
     margin: 47px 0;
 }
 .mine, {
@@ -205,7 +212,7 @@ body {
                 a {
                     color: #908be3;
                     background: rgba(255, 255, 255, 0.80);
-                    padding: 0 15px;
+                    padding: 0 10px;
                     border-radius: 15px;
                     float: right;
                     height: 26px;
@@ -653,10 +660,23 @@ body {
             line-height: 44px;
             padding: 0 10px;
             color: $col6;
-            .span{
+            span:nth-child(1){
+                float: left;
+             }
+            span:nth-child(2){
+                float: left;
+                height: 44px;
+                width: 150px;
+                white-space: normal;
+                word-break: break-all;
+                line-height: 15px;
+                padding: 7px;
+            }
+            span:nth-child(3){
                 float: right;
                 color: $red;
-            }
+            } 
+
         }
         .inner-body{
             padding: 10px 0;
@@ -698,7 +718,10 @@ body {
         margin-top: 15px;
     }
     form:nth-child(2){
-        height: 190px;
+        height: 220px;
+        a{
+            margin-left:20px
+        }
     }
     .mui-input-row{
         span{
@@ -707,12 +730,18 @@ body {
             font-size: 19px;
         }
     }
-    .twoimg img{
+    .moretext-label{
+        width: 100%;
+    }
+    .note_text{font-size: 15px !important;color: #b2b2b2 !important;padding-left: 25px;}
+
+    .uploadimgs img{
         width:50% ;
         height: 180%;
         float: left;
         padding: 15px;
     }
+    
 }
 .publicity-datails{
     .tips{

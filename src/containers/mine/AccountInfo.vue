@@ -20,6 +20,7 @@
 </template>
 
 <script>
+	import Url from '../../utils/url.js';
 	export default {
 		methods:{
 			logout(){

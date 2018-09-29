@@ -18,9 +18,9 @@ import mui from './assets/mui/js/mui.min.js'
 Vue.prototype.mui = mui
 import './assets/mui/js/mui.poppicker.js'
 import './assets/mui/js/mui.picker.js'
+import './assets/mui/js/mui.dtpicker.js'
 
 //
-//import "./assets/mui/css/animate.min.css"  
 import "./assets/mui/css/mui.min.css"  
 import "./assets/mui/css/mui.poppicker.css" 
 import "./assets/mui/css/mui.picker.min.css"  
@@ -32,8 +32,11 @@ Vue.prototype.$echarts = echarts
 //vue复制
 import VueClipboard from 'vue-clipboard2' 
 Vue.use(VueClipboard)
-
-
+//二维码
+import QRCode from 'qrcode'
+ Vue.use(QRCode)
+import VueQriously from 'vue-qriously'
+Vue.use(VueQriously)
 ////odd
 //import './scss/total.scss'
 //import './assets/bootstrap/css/bootstrap.min.css'

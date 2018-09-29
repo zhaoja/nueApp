@@ -63,7 +63,7 @@
 	import Url from '../../utils/url.js';
 	import cityData3 from "@/assets/mui/js/city.data-3.js" 
 	import countryData from "@/assets/mui/js/city.data.js" 
-	
+	import validate  from '../../utils/myvalidate.js';
 	export default{
 		computed: {
 			...mapState({
@@ -93,26 +93,12 @@
 		 	ifRead(){
 				if(this.read==true){
 					//已阅读
-					var inputs = this.insureInfo.user_region!=""&&
-					this.insureInfo.user_name!=""&&
-					this.insureInfo.user_idnum!=""&&
-					this.insureInfo.linker_region!=""&&
-					this.insureInfo.linker_name!=""&&
-					this.insureInfo.area_num!=""&&
-					this.insureInfo.linker_phone!=""&&
-					this.insureInfo.linker_email!="";
-//						console.log(this.insureInfo)
-
-					if(inputs){
-						this.verifiybtn = false;
-					}else{
-						this.Message = "* 请填写完整"
-					}
+					this.verifiybtn = false;
 					
 				}else{
 					//未阅读
 					this.verifiybtn = true;
-					this.Message = ""
+//					this.Message = ""
 				}
 		 	},
 		 	joinInsure(param){
@@ -125,26 +111,43 @@
 				param.user_amount= other.insured_amount;
 				param.uid = localStorage.userid;
   
-				$.ajax({
-		            url: Url+'/Api/Interface/insure',
-		            type:'post',
-		            data:param,
-		            success:function ({code, msg, data}) {
-		            	if(code==1){
-		            		var _data = {
-		            			uid:localStorage.userid,
-		            			insure_id:data.insure_id,
-		            			insurance_id:data.insurance_id
-		            		}
-//  				     	this.$store.dispatch("sendInsureInfo",param)
-							_self.InsureConfirm(_data);
-		            	}else{
-		            		console.log("msg")
-		            	}
-		            },
-		            error:function () {
-		            }
-        		});
+  
+				var inputs = 
+				validate.require(_self.insureInfo.user_region)||
+				validate.require(_self.insureInfo.user_name)||
+				validate.require(_self.insureInfo.user_idnum)||
+				validate.require(_self.insureInfo.linker_region)||
+				validate.require(_self.insureInfo.linker_name)||
+				validate.require(_self.insureInfo.area_num)||
+				validate.require(_self.insureInfo.linker_phone)||
+				validate.require(_self.insureInfo.linker_email);
+ 
+				if(inputs){
+					this.Message = "* 请填写完整"
+				}else{
+					this.Message = ""
+				
+					$.ajax({
+			            url: Url+'/Api/Interface/insure',
+			            type:'post',
+			            data:param,
+			            success:function ({code, msg, data}) {
+			            	if(code==1){
+			            		var _data = {
+			            			uid:localStorage.userid,
+			            			insure_id:data.insure_id,
+			            			insurance_id:data.insurance_id
+			            		}
+	//  				     	this.$store.dispatch("sendInsureInfo",param)
+								_self.InsureConfirm(_data);
+			            	}else{
+			            		console.log("msg")
+			            	}
+			            },
+			            error:function () {
+			            }
+	        		});
+	        	}
 		 	},
 		 	//查看投保信息
 		 	InsureConfirm(data){

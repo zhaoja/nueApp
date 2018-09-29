@@ -61,7 +61,9 @@
 		    	<input type="text" placeholder="请输入紧急联系人电子邮箱" v-model="insureInfo.user_amount" disabled>
 		    </div>
 		</form>
-	    <button style="margin-top: 30px;" @click="placeOrder(insureInfo)" class="mui-btn mui-btn-warning mui-btn-block">提交订单</button>
+		
+	    <button style="margin-top: 30px;" @click="wxPay(insureInfo)" class="mui-btn mui-btn-warning">微信支付</button>
+	    <button style="margin-top: 30px;" @click="placeOrder(insureInfo)" class="mui-btn mui-btn-warning">NRC钱包支付</button>
 
 	</div>
 </template>
@@ -112,6 +114,11 @@
 		            }
         		});
 		 	},
+		 	//微信支付
+		 	wxPay(param){
+		 		alert("暂无")
+		 	},
+		 	//NRC钱包支付
 			placeOrder(param){
 				let _self = this;
 				let _data = {
@@ -127,8 +134,10 @@
 		            data:_data,
 		            success:function ({code, msg, data}) {
 		            	if(code==1){
-							_self.$router.push({path:'/payorder',name:'NRC钱包支付',query:_data})
-    				     	_self.$store.dispatch("confirmInsure",data)
+		            		_data.address = data.address;
+							_self.$router.push({path:'/toNRCPay',name:'绑定NRC钱包支付地址',query:_data});
+//							_self.$router.push({path:'/payorder',name:'NRC钱包支付',query:_data})
+//  				     	_self.$store.dispatch("confirmInsure",data)
 		            	}else{
 		            		console.log("msg") 
 

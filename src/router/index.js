@@ -11,6 +11,7 @@ import Statistics from '@/containers/home/statistics'
 import InsuranceDetails from '@/containers/home/InsuranceDetails'
 import Insure from '@/containers/home/Insure'
 import InsureConfirm from '@/containers/home/InsureConfirm'
+import ToNRCPay from '@/containers/home/toNRCPay'
 import PayOrder from '@/containers/home/payOrder'
 //公示
 import Publicity from '@/containers/Publicity'
@@ -119,6 +120,14 @@ const router = new Router({
 			}
 		},
 		{
+			path: '/toNRCPay',
+			name: '绑定NRC钱包支付地址',
+			component: ToNRCPay,
+			meta: { 
+			  	requireAuth: true
+			}
+		},
+		{
 			path: '/details',
 			name: '公示详情',
 			component: Details
@@ -182,7 +191,7 @@ router.beforeEach((to, from, next) => {
 	 	if (localStorage.userid) {// 判断是否登录
 	  		next()
 	 	} else {// 没登录则跳转到登录界面
-	 		alert("请登录")
+	 		mui.alert('才可查看该模块', '请您先登录');
 		  	next({
 		  		path: '/mine',
 		  		query: {redirect: to.fullPath}

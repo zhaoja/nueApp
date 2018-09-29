@@ -16,7 +16,7 @@
 				</div>
 				
 				<div class="mui-input-row">
-					<button type="button" @click="verifiyCode()" :disabled="verifiybtn" class="mui-btn-primary mui-btn-outlined">{{verifiytext}}</button>
+					<button type="button" @click="getVerifiyCode()" :disabled="verifiybtn" class="mui-btn-primary mui-btn-outlined">{{verifiytext}}</button>
 				</div>
 			</div> 
 			<div class="alert"> {{message}} </div>
@@ -34,14 +34,13 @@
 <script>
 	import { mapState } from "vuex";
 	import validate  from '../../utils/myvalidate.js';
-//	const url = "http://minsadmin.gksharedmall.com";
-	const url = 'http://aaa.com'
+ 	import Url from '../../utils/url.js';
 
 	export default {
 		data() {
 			return {
 				verifiybtn: true, //验证码按钮状态disabled 
-				registerbtn: true, //验证码按钮状态disabled 
+				registerbtn: true, //登录按钮状态disabled 
 				verifiytext:"获取验证码",
 				message:"",   //提示信息
    			}
@@ -49,8 +48,7 @@
 		computed: {
 			...mapState({
 				userInfo:state => state.user.userInfo
-			}),
-			
+			})
 		},
 		created() {
 //			this.$store.dispatch("getTitle", "")
@@ -63,10 +61,10 @@
 					phone() {
 						if(!validate.phone(self.userInfo.phone)) {
 							self.message = "* 不是完整的11位手机号或者正确的手机号前七位";
-							self.registerbtn = true;
+							self.verifiybtn = true;
 						}else{
 							self.message = "";
-							self.registerbtn = false; 
+							self.verifiybtn = false; 
 							return true;
 						}
 						
@@ -92,11 +90,11 @@
 				} 
 			},
 			//获取验证码
-			verifiyCode() {
+			getVerifiyCode() {
 				var that = this;
 				var time = 60
 				$.ajax({
-		            url: url+'/Api/Interface/getCode',
+		            url: Url+'/Api/Interface/getCode',
 		            type:'post',
 		            data:{"phone":this.userInfo.phone},
 		            success:function ({code, msg, data}) {
@@ -123,13 +121,12 @@
 			vLogin(n) {
 				var that = this;
 				let param = this.userInfo;
-				 
    				$.ajax({
-		            url: url+'/Api/Interface/codeLogin',
+		            url: Url+'/Api/Interface/codeLogin',
 		            type:'post',
 		            data:{
 						'phone':param.phone,
-						'code':param.code
+						'code':param.verifiyCode
 					},
 		            success:function ({code, msg, uid}) {
 		            	if(code==1){
@@ -137,7 +134,7 @@
 						    localStorage.userid = uid;
 		            		that.userid = localStorage.userid;
 		            		that.$store.dispatch("newUser",that.userid)
-//		            		that.$router.push('/home')
+		            		that.$router.push('/home')
 		            	}else{
 		            		mui.toast(msg)
 		            	}

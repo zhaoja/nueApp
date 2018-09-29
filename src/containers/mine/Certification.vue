@@ -1,6 +1,5 @@
 <template>
 	<div class="certification">
-	 
 		<form class="mui-input-group">
 			<div class="mui-input-row">
 				<label><span>*</span>真实姓名：</label>
@@ -13,143 +12,117 @@
 		</form>
 		<form class="mui-input-group">
 			<div class="mui-input-row">
-				<label><span>*</span>上传身份证照片：</label>
-			 	<div >请本人手持身份证照片</div>
- 			</div>
- 			<div class="twoimg">
- 				        选择文件:<input type="file" id="file1" /><br />
- 			        <img src="@/assets/images/idcard1.png" style="display:none" id="imgWait" />  
-   				
-   					<input type="file" id="file2" /><br />
- 			        <img src="@/assets/images/idcard2.png" style="display:none" />  
-   				
-   				<!--<img src="@/assets/images/idcard1.png" @click="upIdCard(1)"/>-->
- 				 <!--<input class="upload" @change='upIdCard'  type="file"  accept="image/jpg,image/jpeg,image/x-png,image/gif">-->
-				<!--<img src="@/assets/images/idcard2.png" @click="upIdCard(2)" />-->
-			 </div>
-			 
+				<label class="moretext-label"><span>*</span>上传身份证照片：<span class="note_text">请本人手持身份证照片</span>
+				</label>
+			</div>
+ 
+			<div class="uploadimgs">
+				<img src="@/assets/images/idcard1.png" id="img1" @click="clickUpFile('file1')"/>
+				<img src="@/assets/images/idcard2.png" id="img2" @click="clickUpFile('file2')"/>
+				<input type="file" id="file1" accept="image/*" class="hide" @change="readLocalFile('img1','file1')"/> 
+				<input type="file" id="file2" accept="image/*" class="hide" @change="readLocalFile('img2','file2')"/> 
+			</div>
+			<a @click="showlayer()">示例</a>
 		</form>
-     	<button @click="getRealNameAuth(userInfo);" class='button'> 提交</button>
-
+		<div class="alert"> {{message}} </div>
+		<button @click="getRealNameAuth(userInfo);" class='mui-btn mui-btn-block mui-btn-primary'> 提交</button>
+		<!--<div class="layer">
+			<div class="inner-layer">
+				<a class="close"></a>			
+				<img src="@/assets/images/idcard3.png"/>
+			</div>
+		</div>-->
 	</div>
 </template>
 
 <script>
 	import { mapState } from "vuex"
+	import validate  from '../../utils/myvalidate.js';
 	import Url from '../../utils/url.js';
-	
-	export default{
-		computed:{
+
+	export default {
+		data() {
+			return {
+				message:"" 
+			}
+		},
+		computed: {
 			...mapState({
-				userInfo:state => state.user.userInfo
+				userInfo: state => state.user.userInfo
 			})
 		},
-		methods:{
-//		 	getBase64Image(img) {
-//		         var canvas = document.createElement("canvas");
-//		         canvas.width = img.width;
-//		         canvas.height = img.height;
-//		         var ctx = canvas.getContext("2d");
-//		         ctx.drawImage(img, 0, 0, img.width, img.height);
-//		         var dataURL = canvas.toDataURL("image/png");
-//		         return dataURL
-//	         // return dataURL.replace("data:image/png;base64,", "");
-//   		},
-//   		main(url) {
-//		        var img = document.createElement('img');
-//		        img.src = url;  //此处自己替换本地图片的地址
-//		        img.onload =function() {
-//		            var data = getBase64Image(img);
-//		            var img1 = document.createElement('img');
-//		            img1.src = data;
-//		            document.body.appendChild(img1);
-//		            console.log(data);
-//		        }
-//		    },
-//
-  			getRealNameAuth(param){
-	 			console.log(param,123)
-		 		let _self = this;
-// 			   	this.main(url)
+		mounted(){
+			mui.toast("msg");
+		},
+		methods: {
+			getRealNameAuth(param) {
+				
+				let _self = this;
 				var file1 = document.getElementById("file1").files[0]
 				var file2 = document.getElementById("file2").files[0]
-				console.log(document.getElementById("file1").files)
-           
-//              let _data = {
-//					uid: localStorage.userid,
-//					user_name:param.user_name,
-//					id_number:param.id_number,
-//					idPhoto1:file1,
-//					idPhoto2:file2
-//				}
- 
- 
-                var formData = new FormData();
-				formData.append('uid', localStorage.userid);
-				formData.append('user_name', param.user_name);
-				formData.append('id_number',param.id_number);
-				formData.append('idPhoto1',file1);
-				formData.append('idPhoto2',file2);
-				
-				var xhr = new XMLHttpRequest();
-				xhr.open("post", Url+'/Api/Interface/realNameAuth');
-				xhr.onload = function () {
-				
+
+				if(validate.require(param.user_name)||validate.require(param.id_number)||validate.require(file1)||validate.require(file2)) {
+					_self.message =  "请输入完整信息" 
+				}else{
+				 
+					var formData = new FormData();
+					formData.append('uid', localStorage.userid);
+					formData.append('user_name', param.user_name);
+					formData.append('id_number', param.id_number);
+					formData.append('idPhoto1', file1);
+					formData.append('idPhoto2', file2);
+	
+					var xhr = new XMLHttpRequest();
+					xhr.open("post", Url + '/Api/Interface/realNameAuth');
+					xhr.onload = function() {}
+					xhr.send(formData);
+					xhr.onreadystatechange = function(res) {
+						if(xhr.readyState === 4 && xhr.status === 200) {
+							var res = JSON.parse(xhr.responseText);
+							if(res.success) {
+								console.log(res)
+		            			_self.$router.push({path:'/mine',name:'我的'})
+							} else {
+								 alert("失败")
+							}
+	
+						}
+					}
 				}
-				xhr.send(formData);
-				xhr.onreadystatechange = function (res) {
-				  if(xhr.readyState === 4 && xhr.status === 200){
-				    var res = JSON.parse(xhr.responseText);
-				    if(res.success){
-				      Alert(res.message,2000,'success');
-				      setTimeout(function () {
-				      	alert(1)
-//				        window.location.href = '/platform/platformIndex';
-				      },2000);				
-				
-				    }else {
-//				      Alert(res.message,2000);
-				      // setTimeout(function () {
-				      //   window.location.reload();
-				      // },2000)
-				    }
-				
-				  }
+
+			},
+			clickUpFile(id){
+				document.getElementById(id).click();
+			},
+			//删除图片
+			deleteImg: function(index) {
+				this.imgs.splice(index, 1);
+			},
+			//图片click
+ 
+			//点击选中图片
+			readLocalFile(imgId,inputId) {
+				var img = document.getElementById(imgId);
+				var localFile = document.getElementById(inputId).files[0];
+				var reader = new FileReader();
+				var content;
+				console.log(content, 666)
+				content = reader.readAsDataURL(localFile, "UTF-8");
+				reader.onload = function(event) {
+					content = event.target.result;
+					img.src = content
 				}
-//              $.ajax({
-//                  url: Url+'/Api/Interface/realNameAuth',
-//                  type: "POST",
-//                  data: _data,
-//                  /**
-//                  *必须false才会自动加上正确的Content-Type
-//                  */
-////                  contentType: false,
-//                  /**
-//                  * 必须false才会避开jQuery对 formdata 的默认处理
-//                  * XMLHttpRequest会对 formdata 进行正确的处理
-//                  */
-//                   processData:false, 
-//                  success: function (data) {
-//                  	console.log(data)
-////                      if (data.status == "true") {
-////                          alert("上传成功！");
-////                      }
-////                      if (data.status == "error") {
-////                          alert(data.msg);
-////                      }
-////                      $("#imgWait").hide();
-//                  },
-//                  error: function () {
-//                      alert("上传失败！");
-////                      $("#imgWait").hide();
-//                  }
-//              });
-		 	},
- 		 
-		},
- 	}
-  
+				reader.onerror = function(event) {
+					alert('加载失败')
+				}
+	 		},
+	 		alertPic () {
+	 			
+	 		}
+		}
+	}
 </script>
 
 <style>
+
 </style>

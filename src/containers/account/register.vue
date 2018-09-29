@@ -43,7 +43,7 @@
 	import { mapState } from "vuex";
 	import validate  from '../../utils/myvalidate.js';
 	//	const url = "http://minsadmin.gksharedmall.com";
-	const url = 'http://aaa.com'
+	import Url from '../../utils/url.js';
 	
 	export default {
 		data() {
@@ -131,7 +131,7 @@
 				var that = this;
 				var time = 60
 				$.ajax({
-		            url: url+'/Api/Interface/getCode',
+		            url: Url+'/Api/Interface/getCode',
 		            type:'post',
 		            data:{"phone":this.userInfo.phone},
 		            success:function ({code, msg, data}) {
@@ -165,7 +165,7 @@
 //				this.$router.push({path:'/login', name: '登录', params: { userId: 1 }})
 // 				this.$store.dispatch("sendUserInfo", param)
    				$.ajax({
-		            url: url+'/Api/Interface/register',
+		            url: Url+'/Api/Interface/register',
 		            type:'post',
 		            data:userInfo,
 		            success:function ({code, msg, data}) {
