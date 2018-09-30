@@ -27,7 +27,7 @@ import MyInvitation   from '@/containers/mine/MyInvitation'
 import MyIndemnity    from '@/containers/mine/MyIndemnity' 
 import Certification  from '@/containers/mine/Certification'
 import AccountInfo  from '@/containers/mine/AccountInfo'
-//import AboutUs        from '@/containers/mine/AboutUs'       
+import AboutUs        from '@/containers/mine/AboutUs'       
 
 
 import Layout from '@/components/layout'
@@ -157,7 +157,10 @@ const router = new Router({
 		{
 			path: '/invitefriends',
 			name: '邀请好友',
-			component: MyInvitation
+			component: MyInvitation,
+			meta:{
+				notAvailable:true
+			}
 		},
 		{
 			path: '/indemnity',
@@ -178,7 +181,10 @@ const router = new Router({
 		{
 			path: '/aboutus',
 			name: '关于我们',
-//			component: AboutUs
+			component: AboutUs,
+			meta:{
+				notAvailable:true
+			}
 		}
 	]
 
@@ -198,7 +204,12 @@ router.beforeEach((to, from, next) => {
 		  	})
 	 	}
  	} else {
- 		next()
+		// 判断是否需要登录权限
+   		if (to.matched.some(res => res.meta.notAvailable)) {
+	 		mui.alert('该模块暂无内容');
+	 	} else{
+	 		next()
+	 	} 		
  	}
 })
  
